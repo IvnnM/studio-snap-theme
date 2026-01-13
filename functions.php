@@ -132,6 +132,7 @@ function studio_snap_theme_scripts() {
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
+		wp_enqueue_script( 'studio-snap-theme-comments', get_template_directory_uri() . '/js/comments.js', array(), '1.0.0', true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'studio_snap_theme_scripts' );
@@ -159,18 +160,17 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 /**
- * Set comments to unapproved by default.
+ * Set comments and replies to unapproved by default.
  *
- * @param array $commentdata Comment data.
- * @return array
+ * @param int $comment_ID The comment's ID.
  */
-function studio_snap_theme_set_comment_to_unapproved( $commentdata ) {
+function studio_snap_theme_set_all_comments_to_unapproved( $comment_ID ) {
+    $comment = get_comment( $comment_ID );
     if ( ! current_user_can( 'moderate_comments' ) ) {
-        $commentdata['comment_approved'] = 0;
+        wp_set_comment_status( $comment_ID, 'hold' );
     }
-    return $commentdata;
 }
-add_filter( 'preprocess_comment', 'studio_snap_theme_set_comment_to_unapproved' );
+add_action( 'comment_post', 'studio_snap_theme_set_all_comments_to_unapproved' );
 
 /**
  * Remove the website field from the comment form.

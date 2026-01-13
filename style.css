@@ -384,6 +384,42 @@ h6 { font-size: 1rem; }
     margin-bottom: 20px;
 }
 
+.comment-list .children {
+    list-style: none;
+    padding-left: 20px; /* Indent replies */
+    margin-top: 20px;
+}
+
+.toggle-replies {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.see-more {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.comment-content.truncated {
+    position: relative;
+}
+
+.comment-content.truncated::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+}
+
 
 /* Comment Form */
 #respond {
