@@ -1,0 +1,339 @@
+/*
+Theme Name: Studio Snap Theme
+Author: Your Name
+Author URI: https://example.com/
+Description: A custom theme for Studio Snap.
+Version: 1.0
+Text Domain: studio-snap-theme
+*/
+
+/*--------------------------------------------------------------
+# Reset
+--------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*--------------------------------------------------------------
+# Variables
+--------------------------------------------------------------*/
+:root {
+	--dark-brown: #3E2723;
+	--light-brown: #D7CCC8;
+	--off-white: #F5F5F5;
+	--earthy-green: #689F38;
+	--muted-brown: #A1887F;
+	--white: #FFFFFF;
+}
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+	background-color: var(--off-white);
+	color: var(--dark-brown);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+a {
+	color: var(--earthy-green);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+#page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+#content {
+	flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.site-main {
+    width: 100%;
+    max-width: 600px; /* Center column like Facebook */
+	order: 2;
+}
+
+.sidebar-left {
+	width: 300px;
+    padding-right: 20px;
+	order: 1;
+}
+
+#secondary {
+	width: 300px;
+    padding-left: 20px;
+	order: 3;
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+.site-header {
+	background-color: var(--light-brown);
+	padding: 10px 20px;
+	border-bottom: 1px solid var(--muted-brown);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.site-branding .site-title a {
+	color: var(--dark-brown);
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+.site-branding .site-description {
+	color: var(--muted-brown);
+	font-size: 0.8rem;
+}
+
+
+/*--------------------------------------------------------------
+# Navigation
+--------------------------------------------------------------*/
+.menu-toggle {
+	display: none;
+}
+
+.main-navigation ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.main-navigation li {
+	margin: 0 10px;
+}
+
+.main-navigation a {
+	color: var(--dark-brown);
+	font-weight: 500;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+	.site-header {
+		flex-wrap: wrap;
+	}
+
+	.site-branding {
+		flex-basis: 100%;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.main-navigation {
+		flex-basis: 100%;
+		text-align: center;
+	}
+
+	.main-navigation .menu-toggle {
+		display: block; /* Show the toggle button on small screens */
+		background-color: var(--earthy-green);
+		color: var(--white);
+		border: none;
+		padding: 10px 15px;
+		cursor: pointer;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.main-navigation ul {
+		display: none; /* Hide the menu by default on small screens */
+		flex-direction: column;
+		width: 100%;
+		background-color: var(--light-brown);
+		position: absolute;
+		top: 100%; /* Position below the header */
+		left: 0;
+		right: 0;
+		z-index: 999;
+	}
+
+	.main-navigation.toggled-on ul {
+		display: flex; /* Show the menu when toggled on */
+	}
+
+	.main-navigation li {
+		margin: 0;
+		border-bottom: 1px solid var(--muted-brown);
+	}
+
+	.main-navigation li:last-child {
+		border-bottom: none;
+	}
+
+	.main-navigation a {
+		display: block;
+		padding: 15px;
+		color: var(--dark-brown);
+		text-align: left;
+	}
+
+	.main-navigation a:hover {
+		background-color: var(--muted-brown);
+		color: var(--white);
+		text-decoration: none;
+	}
+
+	#content {
+		flex-direction: column;
+		padding: 10px;
+	}
+
+	.site-main {
+		order: 1;
+		max-width: 100%;
+	}
+
+	.sidebar-left,
+	#secondary {
+		order: 2;
+		width: 100%;
+		padding: 0;
+		margin-top: 20px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Content
+--------------------------------------------------------------*/
+.hentry {
+	background-color: var(--white);
+	border: 1px solid var(--light-brown);
+	border-radius: 8px;
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+.entry-title {
+	font-size: 1.5rem;
+	margin-bottom: 10px;
+}
+
+.entry-meta {
+	font-size: 0.9rem;
+	color: var(--muted-brown);
+	margin-bottom: 15px;
+}
+
+.entry-content p {
+	margin-bottom: 1rem;
+}
+
+.entry-footer .cat-links,
+.entry-footer .tags-links {
+	display: block;
+	font-size: 0.9rem;
+	margin-top: 10px;
+}
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+.widget {
+	background-color: var(--white);
+	border: 1px solid var(--light-brown);
+	border-radius: 8px;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+
+.widget-title {
+	font-size: 1.2rem;
+	margin-bottom: 10px;
+	border-bottom: 1px solid var(--light-brown);
+	padding-bottom: 5px;
+}
+
+.widget ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.widget li {
+	margin-bottom: 5px;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.site-footer {
+	background-color: var(--light-brown);
+	color: var(--dark-brown);
+	padding: 20px;
+	text-align: center;
+	font-size: 0.9rem;
+}
