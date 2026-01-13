@@ -1,8 +1,38 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Hide replies by default
+    // Function to apply "See More" logic to a given comment-content element
+    function applySeeMoreToComment(commentContentElement) {
+        const maxHeight = 100; // pixels
+        // Check if the see-more link already exists and if the comment needs truncation
+        if (commentContentElement.scrollHeight > maxHeight && !commentContentElement.parentNode.querySelector('.see-more')) {
+            commentContentElement.style.maxHeight = maxHeight + 'px';
+            commentContentElement.style.overflow = 'hidden';
+            commentContentElement.classList.add('truncated');
+
+            const seeMoreLink = document.createElement('a');
+            seeMoreLink.href = '#';
+            seeMoreLink.textContent = 'See More';
+            seeMoreLink.classList.add('see-more');
+            commentContentElement.parentNode.insertBefore(seeMoreLink, commentContentElement.nextSibling);
+
+            seeMoreLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (commentContentElement.classList.contains('truncated')) {
+                    commentContentElement.style.maxHeight = 'none';
+                    commentContentElement.classList.remove('truncated');
+                    this.textContent = 'See Less';
+                } else {
+                    commentContentElement.style.maxHeight = maxHeight + 'px';
+                    commentContentElement.classList.add('truncated');
+                    this.textContent = 'See More';
+                }
+            });
+        }
+    }
+
     const commentList = document.querySelector('.comment-list');
     if (commentList) {
-        const topLevelComments = commentList.querySelectorAll(':scope > .comment');
+        // Handle "Show/Hide Replies" and apply "See More" to replies when they are shown
+        const topLevelComments = commentList.querySelectorAll(':scope > li.comment');
         topLevelComments.forEach(comment => {
             const children = comment.querySelector('.children');
             if (children) {
@@ -18,9 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 toggleRepliesLink.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (children.style.display === 'none') {
+                    const isHidden = children.style.display === 'none';
+                    if (isHidden) {
                         children.style.display = 'block';
                         this.textContent = 'Hide Replies';
+                        // Now that replies are visible, apply "See More"
+                        const repliedCommentsContent = children.querySelectorAll('.comment-content');
+                        repliedCommentsContent.forEach(applySeeMoreToComment);
                     } else {
                         children.style.display = 'none';
                         this.textContent = 'Show Replies';
@@ -28,37 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+
+        // Initial application for top-level comments
+        const initialComments = document.querySelectorAll('.comment-list > li.comment > .comment-body > .comment-content');
+        initialComments.forEach(applySeeMoreToComment);
     }
-
-    // "See More" for long comments
-    const comments = document.querySelectorAll('.comment-content');
-    comments.forEach((comment, index) => {
-        const maxHeight = 100; // pixels
-        console.log(`Comment ${index} scrollHeight: ${comment.scrollHeight}`);
-        if (comment.scrollHeight > maxHeight) {
-            console.log(`Comment ${index} is long. Truncating.`);
-            comment.style.maxHeight = maxHeight + 'px';
-            comment.style.overflow = 'hidden';
-            comment.classList.add('truncated');
-
-            const seeMoreLink = document.createElement('a');
-            seeMoreLink.href = '#';
-            seeMoreLink.textContent = 'See More';
-            seeMoreLink.classList.add('see-more');
-            comment.parentNode.insertBefore(seeMoreLink, comment.nextSibling);
-
-            seeMoreLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (comment.classList.contains('truncated')) {
-                    comment.style.maxHeight = 'none';
-                    comment.classList.remove('truncated');
-                    this.textContent = 'See Less';
-                } else {
-                    comment.style.maxHeight = maxHeight + 'px';
-                    comment.classList.add('truncated');
-                    this.textContent = 'See More';
-                }
-            });
-        }
-    });
 });
