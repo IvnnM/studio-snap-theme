@@ -77,12 +77,6 @@ if ( ! function_exists( 'studio_snap_theme_entry_footer' ) ) :
 			}
 		}
 
-		if ( is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="comments-link">';
-			echo '<a href="#comments">' . __( 'Leave a Comment', 'studio-snap-theme' ) . '</a>';
-			echo '</span>';
-		}
-
 		edit_post_link(
 			sprintf(
 				wp_kses(

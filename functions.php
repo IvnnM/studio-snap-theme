@@ -171,3 +171,34 @@ function studio_snap_theme_set_comment_to_unapproved( $commentdata ) {
     return $commentdata;
 }
 add_filter( 'preprocess_comment', 'studio_snap_theme_set_comment_to_unapproved' );
+
+/**
+ * Remove the website field from the comment form.
+ *
+ * @param array $fields The default comment form fields.
+ * @return array
+ */
+function studio_snap_theme_disable_comment_url_field( $fields ) {
+    if ( isset( $fields['url'] ) ) {
+        unset( $fields['url'] );
+    }
+    return $fields;
+}
+add_filter( 'comment_form_default_fields', 'studio_snap_theme_disable_comment_url_field' );
+
+/**
+ * Modify the comment consent checkbox text.
+ *
+ * @param array $defaults The default comment form arguments.
+ * @return array
+ */
+function studio_snap_theme_modify_comment_consent_text( $defaults ) {
+    $commenter = wp_get_current_commenter();
+    $consent   = empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"';
+
+    $defaults['fields']['cookies'] = '<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' />' .
+        '<label for="wp-comment-cookies-consent">' . __( 'Save my name and email in this browser for the next time I comment.', 'studio-snap-theme' ) . '</label></p>';
+
+    return $defaults;
+}
+add_filter( 'comment_form_defaults', 'studio_snap_theme_modify_comment_consent_text' );
