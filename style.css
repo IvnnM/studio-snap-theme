@@ -116,21 +116,18 @@ h6 { font-size: 1rem; }
 }
 
 .site-main {
-    width: 100%;
-    max-width: 600px; /* Center column like Facebook */
-	order: 2;
-}
-
-.sidebar-left {
-	width: 300px;
-    padding-right: 20px;
+    width: 70%;
 	order: 1;
 }
 
+.sidebar-left {
+	display: none;
+}
+
 #secondary {
-	width: 300px;
+	width: 30%;
     padding-left: 20px;
-	order: 3;
+	order: 2;
 }
 
 /*--------------------------------------------------------------
