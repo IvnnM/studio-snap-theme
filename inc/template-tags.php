@@ -14,14 +14,25 @@ if ( ! function_exists( 'studio_snap_theme_posted_on' ) ) :
 	function studio_snap_theme_posted_on() {
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
+		// Check if the post has been modified
+		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+			$time_string = '<time class="updated" datetime="%1$s">%2$s</time>'; // Only show updated date for "Edited on"
+            $date_format = esc_html_x( 'Edited on %s', 'post date', 'studio-snap-theme' );
+            $date_to_display = esc_html( get_the_modified_date() );
+            $date_attr = esc_attr( get_the_modified_date( DATE_W3C ) );
+		} else {
+            $date_format = esc_html_x( 'Posted on %s', 'post date', 'studio-snap-theme' );
+            $date_to_display = esc_html( get_the_date() );
+            $date_attr = esc_attr( get_the_date( DATE_W3C ) );
+		}
+
 		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( DATE_W3C ) ),
-			esc_html( get_the_date() )
+			$date_attr,
+			$date_to_display
 		);
 
 		$posted_on = sprintf(
-			/* translators: %s: post date. */
-			esc_html_x( 'Posted on %s', 'post date', 'studio-snap-theme' ),
+			$date_format,
 			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
 
