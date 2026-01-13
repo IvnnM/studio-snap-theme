@@ -157,3 +157,17 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Set comments to unapproved by default.
+ *
+ * @param array $commentdata Comment data.
+ * @return array
+ */
+function studio_snap_theme_set_comment_to_unapproved( $commentdata ) {
+    if ( ! current_user_can( 'moderate_comments' ) ) {
+        $commentdata['comment_approved'] = 0;
+    }
+    return $commentdata;
+}
+add_filter( 'preprocess_comment', 'studio_snap_theme_set_comment_to_unapproved' );
