@@ -300,6 +300,14 @@ h6 { font-size: 1rem; }
 	margin-top: 10px;
 }
 
+.post-thumbnail img {
+	width: 100%;
+	height: auto;
+	display: block;
+	aspect-ratio: 16/9;
+	object-fit: cover;
+}
+
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
